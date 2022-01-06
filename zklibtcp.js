@@ -463,9 +463,25 @@ class ZKLibTCP {
       const data = await this.executeCmd(COMMANDS.CMD_GET_FREE_SIZES, '')
 
       return {
-        userCounts: data.readUIntLE(24, 4),
-        logCounts: data.readUIntLE(40, 4),
-        logCapacity: data.readUIntLE(72, 4)
+        adminCount      : data.readUIntLE(48, 4),
+        userCount       : data.readUIntLE(16, 4),
+        fpCount         : data.readUIntLE(24, 4),
+        pwdCount        : data.readUIntLE(52, 4),
+        oplogCount      : data.readUIntLE(40, 4),
+        attCount        : data.readUIntLE(32, 4),
+        fpCapacity      : data.readUIntLE(56, 4),
+        userCapacity    : data.readUIntLE(60, 4),
+        attlogCapacity  : data.readUIntLE(64, 4),
+        remainingFp     : data.readUIntLE(68, 4),
+        remainingUser   : data.readUIntLE(72, 4),
+        remainingAttlog : data.readUIntLE(76, 4),
+        faceCount       : data.readUIntLE(80, 4),
+        faceCapacity    : data.readUIntLE(88, 4),
+        // x: {
+        //   userCounts: data.readUIntLE(24, 4),
+        //   logCounts: data.readUIntLE(40, 4),              
+        //   logCapacity: data.readUIntLE(72, 4)
+        // }
       }
     } catch (err) {
       return Promise.reject(err)
