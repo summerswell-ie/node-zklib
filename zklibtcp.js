@@ -475,13 +475,8 @@ class ZKLibTCP {
         remainingFp     : data.readUIntLE(68, 4),
         remainingUser   : data.readUIntLE(72, 4),
         remainingAttlog : data.readUIntLE(76, 4),
-        faceCount       : data.readUIntLE(80, 4),
-        faceCapacity    : data.readUIntLE(88, 4),
-        // x: {
-        //   userCounts: data.readUIntLE(24, 4),
-        //   logCounts: data.readUIntLE(40, 4),              
-        //   logCapacity: data.readUIntLE(72, 4)
-        // }
+        // faceCount       : data.readUIntLE(80, 4),
+        // faceCapacity    : data.readUIntLE(88, 4),        
       }
     } catch (err) {
       return Promise.reject(err)
