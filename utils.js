@@ -134,6 +134,7 @@ module.exports.decodeUserData72 = (userData)=>{
           .split('\0')
           .shift(),
         cardno: userData.readUIntLE(35,4),
+        groupno: userData.readUIntLE(39,1),
         userId: userData
           .slice(48, 48+9)
           .toString('ascii')
@@ -151,7 +152,9 @@ module.exports.decodeRecordData40 = (recordData)=>{
         .toString('ascii')
         .split('\0')
         .shift(),
+        verifyType: recordData.readUIntLE(26,1),
         recordTime: parseTimeToDate(recordData.readUInt32LE(27)),
+        verifyState: recordData.readUIntLE(31,1),
       }
       return record
 }
