@@ -28,26 +28,40 @@ class ZKLibTCP {
     return new Promise((resolve, reject) => {
       this.socket = new net.Socket()
 
+
+      const t = setTimeout( () => {
+        this.socket.emit( 'timeout' );        
+      }, 5000);
+
       this.socket.once('error', err => {
+        clearTimeout(t);
         reject(err)
         cbError && cbError(err)
       })
 
       this.socket.once('connect', () => {
+        clearTimeout(t);
         resolve(this.socket)
       })
 
       this.socket.once('close', (err) => {
+        clearTimeout(t);
         this.socket = null;
         cbClose && cbClose('tcp')
       })
 
-
-      if (this.timeout) {
-        this.socket.setTimeout(this.timeout)
+      this.socket.on('timeout', () => {        
+        if ( this.socket && this.socket.connecting ) {
+          this.socket.destroy();
+          this.socket.emit( 'error', new Error('Connect Timeout'));
+        }
+      })
+      
+      try {
+        this.socket.connect(this.port, this.ip)
+      } catch( error ) {
+        this.socket.emit('error', err);
       }
-
-      this.socket.connect(this.port, this.ip)
     })
   }
 
