@@ -228,3 +228,4 @@ class ZKLib {
 
 
 module.exports = ZKLib
+module.exports.ZKError = ZKError;
