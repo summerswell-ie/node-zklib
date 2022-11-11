@@ -21,6 +21,7 @@ class ZKLibTCP {
     this.sessionId = null
     this.replyId = 0
     this.socket = null
+    this.connectTimeout = connectTimeout;
   }
 
 
@@ -31,7 +32,7 @@ class ZKLibTCP {
 
       const t = setTimeout( () => {
         this.socket.emit( 'timeout' );        
-      }, connectTimeout);
+      }, this.connectTimeout);
 
       this.socket.once('error', err => {
         clearTimeout(t);
