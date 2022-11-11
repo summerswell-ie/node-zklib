@@ -14,7 +14,7 @@ const { createTCPHeader,
 const { log } = require('./helpers/errorLog')
 
 class ZKLibTCP {
-  constructor(ip, port, timeout) {
+  constructor(ip, port, timeout, connectTimeout=5000) {
     this.ip = ip
     this.port = port
     this.timeout = timeout
@@ -31,7 +31,7 @@ class ZKLibTCP {
 
       const t = setTimeout( () => {
         this.socket.emit( 'timeout' );        
-      }, 5000);
+      }, connectTimeout);
 
       this.socket.once('error', err => {
         clearTimeout(t);
